@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = "io.koara"
+jar.baseName = 'koara-xml'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+	classifier = "sources"
+	from sourceSets.main.allJava.srcDirs
+}
+
+task javadocJar(type: Jar) {
+	classifier = "javadoc"
+	from javadoc
+}
+
+artifacts {
+	archives jar
+	archives javadocJar
+	archives sourcesJar
+}
+
+dependencies {
+	compile "io.koara:koara:0.9.0"
+	testCompile "junit:junit:4.11"
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+				ext.sonatypeUsername = rootProject.hasProperty('sonatypeUsername') ? rootProject.sonatypeUsername : ''
+				ext.sonatypePassword = rootProject.hasProperty('sonatypePassword') ? rootProject.sonatypePassword : ''
+				authentication(userName: sonatypeUsername, password: sonatypePassword)
+			}
+
+			pom.project {
+				name 'koara-xml'
+				packaging 'jar'
+				description 'Koara to XML parser written in Java'
+				url 'http://www.koara.io'
+
+				scm {
+					url 'https://github.com/koara/koara-java-xml.git'
+					connection 'https://github.com/koara/koara-java-xml.git'
+					developerConnection 'https://github.com/koara/koara-java-xml.git'
+				}
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+						distribution 'repo'
+					}
+				}
+				developers {
+					developer {
+						id 'codeaddslife'
+						name 'Andy Van Den Heuvel'
+					}
+				}
+			}
+		}
+	}
+}
