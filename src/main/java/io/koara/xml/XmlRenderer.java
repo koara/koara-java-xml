@@ -30,7 +30,8 @@ import io.koara.ast.ListItem;
 import io.koara.ast.Paragraph;
 import io.koara.ast.Strong;
 import io.koara.ast.Text;
-import io.koara.renderer.Renderer;
+import io.koara.Renderer;
+
 public class XmlRenderer implements Renderer {
 
 	private StringBuffer out;
