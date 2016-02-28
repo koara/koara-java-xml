@@ -9,12 +9,12 @@
 [Koara](http://www.koara.io) is a modular lightweight markup language. This project is for parsing Koara to Xml.
 
 ## Getting Started
-- Download [JAR file](http://repo1.maven.org/maven2/io/koara/koara-xml/0.9.1/koara-xml-0.9.1.jar)
+- Download [JAR file](http://repo1.maven.org/maven2/io/koara/koara-xml/0.9.2/koara-xml-0.9.2.jar)
 - Gradle
 
   ```groovy
   dependencies {
-	compile "io.koara:koara-xml:0.9.1"
+	compile "io.koara:koara-xml:0.9.2"
   }
   ```
   
@@ -24,7 +24,7 @@
   <dependency>
     <groupId>io.koara</groupId>
     <artifactId>koara-xml</artifactId>
-    <version>0.9.1</version>
+    <version>0.9.2</version>
   </dependency>
   ```
 
