@@ -1,6 +1,8 @@
 bin
 build
 .classpath
+.coveralls.yml
+.DS_Store
 .gradle
 .settings
 .project
