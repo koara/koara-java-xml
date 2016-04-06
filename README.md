@@ -61,5 +61,5 @@ public class Demo {
 ## Configuration
 ### Parser
 ### Renderer
-- `addDeclarationTag(String)`: 
+- `addDeclarationTag()`: 
   Add a declaration tag to the XML document.
