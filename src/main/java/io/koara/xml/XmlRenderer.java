@@ -36,10 +36,14 @@ public class XmlRenderer implements Renderer {
 
 	private StringBuffer out;
 	private int level;
+	private String declarationTag;
 	
 	@Override
 	public void visit(Document node) {
-		out = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+		out = new StringBuffer();
+		if(declarationTag != null) {
+		    out.append(declarationTag);
+		}
 		if(node.getChildren() != null && node.getChildren().length > 0) {
 			out.append("<document>\n");
 			node.childrenAccept(this);
@@ -227,6 +231,10 @@ public class XmlRenderer implements Renderer {
 	
 	public String getOutput() {
 		return out.toString();
+	}
+	
+	public void addDeclarationTag(String declarationTag) {
+		this.declarationTag = declarationTag;
 	}
 	
 }
