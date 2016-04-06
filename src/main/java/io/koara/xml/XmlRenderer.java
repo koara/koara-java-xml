@@ -42,7 +42,7 @@ public class XmlRenderer implements Renderer {
 	public void visit(Document node) {
 		out = new StringBuffer();
 		if(declarationTag != null) {
-		    out.append(declarationTag);
+		    out.append(declarationTag + "\n");
 		}
 		if(node.getChildren() != null && node.getChildren().length > 0) {
 			out.append("<document>\n");
@@ -233,7 +233,7 @@ public class XmlRenderer implements Renderer {
 		return out.toString();
 	}
 	
-	public void addDeclarationTag(String declarationTag) {
+	public void setDeclarationTag(String declarationTag) {
 		this.declarationTag = declarationTag;
 	}
 	

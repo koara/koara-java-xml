@@ -22,7 +22,7 @@ public class XmlRendererTest {
 	}
 	
 	@Test
-	public void basic() {
+	public void testBasic() {
 		StringBuilder expected = new StringBuilder();
 		expected.append("<document>\n");
 		expected.append("  <paragraph>\n");
@@ -35,7 +35,7 @@ public class XmlRendererTest {
 	}
 	
 	@Test
-	public void addDeclarationTag() {
+	public void testAddDeclarationTag() {
 		StringBuilder expected = new StringBuilder();
 		expected.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		expected.append("<document>\n");
@@ -44,7 +44,7 @@ public class XmlRendererTest {
 		expected.append("  </paragraph>\n");
 		expected.append("</document>");
 		
-		renderer.addDeclarationTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+		renderer.setDeclarationTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		document.accept(renderer);
 		assertEquals(expected.toString(), renderer.getOutput());
 	}
