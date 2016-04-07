@@ -2,14 +2,15 @@
 
 [![Build Status](https://img.shields.io/travis/koara/koara-java-xml.svg)](https://travis-ci.org/koara/koara-java-xml)
 [![Coverage Status](https://img.shields.io/coveralls/koara/koara-java-xml.svg)](https://coveralls.io/github/koara/koara-java-xml?branch=master)
-[![Latest Version](https://img.shields.io/maven-central/v/io.koara/koara.svg?label=Maven Central)](http://search.maven.org/#search%7Cga%7C1%7Ckoara-xml)
+[![Latest Version](https://img.shields.io/maven-central/v/io.koara/koara-xml.svg?label=Maven Central)](http://search.maven.org/#search%7Cga%7C1%7Ckoara-xml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/koara/koara-java-xml/blob/master/LICENSE)
 
-# koara-java-xml
-[Koara](http://www.koara.io) is a modular lightweight markup language. This project is for parsing Koara to Xml without external dependencies.
+# Koara-java-xml
+[Koara](http://www.koara.io) is a modular lightweight markup language. This project can render the koara AST to Xml in Java.  
+The AST is created by the [core koara parser](https://github.com/koara/koara-java-xml).
 
-## Getting Started
-- Download [JAR file](http://repo1.maven.org/maven2/io/koara/koara-xml/0.10/koara-xml-0.10.jar)
+## Getting started
+- Download [JAR file](http://repo1.maven.org/maven2/io/koara/koara/0.10/koara-xml-0.10.jar)
 - Gradle
 
   ```groovy
@@ -30,28 +31,19 @@
 
 ## Usage
 ```java
-package io.koara;
+package demo;
 
+import io.koara.Parser;
 import io.koara.ast.Document;
 import io.koara.xml.XmlRenderer;
-import static io.koara.Module.*;
 
-public class Demo {
+public class App {
 
 	public static void main(String[] args) {
-		
 		Parser parser = new Parser();
-		
-		// Enable which modules to parse (all are parsed by default)
-		parser.setModules(PARAGRAPHS, HEADINGS, LISTS, LINKS, IMAGES, FORMATTING, BLOCKQUOTES, CODE);
-		
-		// Parse string or file and generate AST
-		Document document = parser.parse("Hello World!"); 
-		
-		// Render AST as Xml
+		Document document = parser.parse("Hello World!");
 		XmlRenderer renderer = new XmlRenderer();
 		document.accept(renderer);
-		
 		System.out.println(renderer.getOutput());
 	}
 	
@@ -59,7 +51,9 @@ public class Demo {
 ```
 
 ## Configuration
-### Parser
-### Renderer
-- `setDeclarationTag()`: 
-  Add a declaration tag to the XML document.
+You can configure the Renderer:
+
+-  **renderer.setDeclarationTag(String declarationTag)**  
+   Default:	`null`
+   
+   Add an XML Declaration Tag add the top of the generated output.  
