@@ -7,7 +7,7 @@
 
 # Koara-java-xml
 [Koara](http://www.koara.io) is a modular lightweight markup language. This project can render the koara AST to Xml in Java.  
-The AST is created by the [core koara parser](https://github.com/koara/koara-java-xml).
+The AST is created by the [core koara parser](https://github.com/koara/koara-java).
 
 ## Getting started
 - Download [JAR file](http://repo1.maven.org/maven2/io/koara/koara/0.10/koara-xml-0.10.jar)
@@ -41,9 +41,9 @@ public class App {
 
 	public static void main(String[] args) {
 		Parser parser = new Parser();
-		Document document = parser.parse("Hello World!");
+		Document result = parser.parse("Hello World!");
 		XmlRenderer renderer = new XmlRenderer();
-		document.accept(renderer);
+		result.accept(renderer);
 		System.out.println(renderer.getOutput());
 	}
 	
