@@ -116,14 +116,14 @@ public class XmlRenderer implements Renderer {
 		level++;
 		out.append(indent() + "<codeblock");
 		if(node.getLanguage() != null) {
-			out.append(" language=\"" + node.getLanguage() + "\"");
+			out.append(" language=\"" + escape(node.getLanguage()) + "\"");
 		}
 		if(node.getValue() != null && node.getValue().toString().length() > 0) {
-			out.append(">\n");
+			out.append(">");
 			level++;
 			out.append(escape(node.getValue().toString()));
 			level--;
-			out.append(indent() + "</codeblock>\n");
+			out.append("</codeblock>\n");
 			level--;
 		} else {
 			out.append(" />\n");
