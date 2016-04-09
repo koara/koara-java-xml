@@ -123,7 +123,7 @@ public class XmlRenderer implements Renderer {
 			level++;
 			out.append(escape(node.getValue().toString()));
 			level--;
-			out.append("</codeblock>\n");
+			out.append(indent() + "</codeblock>\n");
 			level--;
 		} else {
 			out.append(" />\n");
