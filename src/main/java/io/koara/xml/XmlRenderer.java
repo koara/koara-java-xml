@@ -123,11 +123,11 @@ public class XmlRenderer implements Renderer {
 			level++;
 			out.append(escape(node.getValue().toString()));
 			level--;
-			out.append(indent() + "</codeblock>\n");
-			level--;
+			out.append("</codeblock>\n");
 		} else {
 			out.append(" />\n");
 		}
+		level--;
 	}
 
 	@Override
