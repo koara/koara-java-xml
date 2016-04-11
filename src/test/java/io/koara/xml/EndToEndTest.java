@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.Before;
@@ -1306,7 +1307,13 @@ public class EndToEndTest {
         XmlRenderer renderer = new XmlRenderer();
         document.accept(renderer);
 
+        FileWriter fw = new FileWriter(new File("/Users/andy/Desktop/" + file + ".xml"));
+        fw.write(renderer.getOutput());
+        fw.close();
+        
         assertEquals(xml, renderer.getOutput());
+        
+       
     }
     
     private String readFile(String path) throws IOException {
