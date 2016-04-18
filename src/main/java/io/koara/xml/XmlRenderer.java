@@ -56,13 +56,15 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(Heading node) {
 		level++;
-		out.append(indent() + "<heading level=\"" + node.getValue() + "\"");
+		indent();
+		out.append("<heading level=\"" + node.getValue() + "\"");
 		if(node.getChildren() != null && node.getChildren().length > 0) {
 			out.append(">\n");
 			level++;
 			node.childrenAccept(this);
 			level--;
-			out.append(indent() + "</heading>\n");
+			indent();
+			out.append("</heading>\n");
 		} else {
 			out.append(" />\n");
 		}
@@ -72,13 +74,15 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(BlockQuote node) {
 		level++;
-		out.append(indent() + "<blockquote");
+		indent();
+		out.append("<blockquote");
 		if(node.getChildren() != null && node.getChildren().length > 0) {
 			out.append(">\n");
 			level++;
 			node.childrenAccept(this);
 			level--;
-			out.append(indent() + "</blockquote>\n");
+			indent();
+			out.append("</blockquote>\n");
 			level--;
 		} else {
 			out.append(" />\n");
@@ -88,23 +92,27 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(ListBlock node) {
 		level++;
-		out.append(indent() + "<list ordered=\"" + node.isOrdered() + "\">\n");
+		indent();
+		out.append("<list ordered=\"" + node.isOrdered() + "\">\n");
 		node.childrenAccept(this);
-		out.append(indent() + "</list>\n");
+		indent();
+		out.append("</list>\n");
 		level--;
 	}
 
 	@Override
 	public void visit(ListItem node) {
 		level++;
-		out.append(indent() + "<listitem");
+		indent();
+		out.append("<listitem");
 		if(node.getNumber() != null) {
 			out.append(" number=\"" + node.getNumber() + "\"");
 		}
 		if(node.getChildren() != null && node.getChildren().length > 0) {
 			out.append(">\n");
 			node.childrenAccept(this);
-			out.append(indent() + "</listitem>\n");
+			indent();
+			out.append("</listitem>\n");
 		} else {
 			out.append(" />\n");
 		}
@@ -114,7 +122,8 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(CodeBlock node) {
 		level++;
-		out.append(indent() + "<codeblock");
+		indent();
+		out.append("<codeblock");
 		if(node.getLanguage() != null) {
 			out.append(" language=\"" + escape(node.getLanguage()) + "\"");
 		}
@@ -133,11 +142,13 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(Paragraph node) {
 		level++;
-		out.append(indent() + "<paragraph>\n");
+		indent();
+		out.append("<paragraph>\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</paragraph>\n");
+		indent();
+		out.append("</paragraph>\n");
 		level--;
 	}
 
@@ -147,59 +158,71 @@ public class XmlRenderer implements Renderer {
 
 	@Override
 	public void visit(Image node) {
-		out.append(indent() + "<image url=\"" + escapeUrl(node.getValue().toString()) + "\">\n");
+		indent();
+		out.append("<image url=\"" + escapeUrl(node.getValue().toString()) + "\">\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</image>\n");
+		indent();
+		out.append("</image>\n");
 	}
 
 	@Override
 	public void visit(Link node) {
-		out.append(indent() + "<link url=\"" + escapeUrl(node.getValue().toString()) + "\">\n");
+		indent();
+		out.append("<link url=\"" + escapeUrl(node.getValue().toString()) + "\">\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</link>\n");
+		indent();
+		out.append("</link>\n");
 	}
 
 	@Override
 	public void visit(Text node) {
-		out.append(indent() + "<text>");
+		indent();
+		out.append("<text>");
 		out.append(escape(node.getValue().toString()));
 		out.append("</text>\n");
 	}
 
 	@Override
 	public void visit(Strong node) {
-		out.append(indent() + "<strong>\n");
+		indent();
+		out.append("<strong>\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</strong>\n");
+		indent();
+		out.append("</strong>\n");
 	}
 
 	@Override
 	public void visit(Em node) {
-		out.append(indent() + "<em>\n");
+		indent();
+		out.append("<em>\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</em>\n");
+		indent();
+		out.append("</em>\n");
 	}
 
 	@Override
 	public void visit(Code node) {
-		out.append(indent() + "<code>\n");
+		indent();
+		out.append("<code>\n");
 		level++;
 		node.childrenAccept(this);
 		level--;
-		out.append(indent() + "</code>\n");
+		indent();
+		out.append("</code>\n");
 	}
 
 	@Override
 	public void visit(LineBreak node) {
-		out.append(indent() + "<linebreak />\n");
+		indent();
+		out.append("<linebreak />\n");
 	}
 
 	public String escapeUrl(String text) {
@@ -213,13 +236,11 @@ public class XmlRenderer implements Renderer {
 				.replaceAll("\\\\", "%5C");
 	}
 	
-	public String indent() {
+	public void indent() {
 		int repeat = level * 2;
-	    final char[] buf = new char[repeat];
 		for (int i = repeat - 1; i >= 0; i--) {
-		 buf[i] = ' ';
+		 out.append(" ");
 		} 
-		return new String(buf);
 	}
 	
 	public String escape(String text) {
