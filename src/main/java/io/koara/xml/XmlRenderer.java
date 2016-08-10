@@ -37,6 +37,7 @@ public class XmlRenderer implements Renderer {
 	private StringBuffer out;
 	private int level;
 	private String declarationTag;
+	private boolean hardWrap;
 	
 	@Override
 	public void visit(Document node) {
@@ -221,8 +222,9 @@ public class XmlRenderer implements Renderer {
 
 	@Override
 	public void visit(LineBreak node) {
-		indent();
-		out.append("<linebreak />\n");
+		boolean hard = hardWrap || node.isExplicit();
+		indent()
+		out.append("<linebreak explicit=\"" + hard + "\"/>\n");
 	}
 
 	public String escapeUrl(String text) {
@@ -252,6 +254,10 @@ public class XmlRenderer implements Renderer {
 	
 	public String getOutput() {
 		return out.toString();
+	}
+	
+	public void setHardWrap(boolean hardWrap) {
+		this.hardWrap = hardWrap;
 	}
 	
 	public void setDeclarationTag(String declarationTag) {
