@@ -223,7 +223,7 @@ public class XmlRenderer implements Renderer {
 	@Override
 	public void visit(LineBreak node) {
 		boolean hard = hardWrap || node.isExplicit();
-		indent()
+		indent();
 		out.append("<linebreak explicit=\"" + hard + "\"/>\n");
 	}
 
