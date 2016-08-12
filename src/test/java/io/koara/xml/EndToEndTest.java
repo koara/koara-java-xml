@@ -1306,12 +1306,8 @@ public class EndToEndTest {
         Document document = parser.parseFile(kd);
         XmlRenderer renderer = new XmlRenderer();
         document.accept(renderer);
-        
-        FileWriter fw = new FileWriter(new File("/Users/andy/Desktop/" + file + ".xml"));
-        fw.write(renderer.getOutput());
-        fw.close();
-        
-        //assertEquals(xml, renderer.getOutput());
+
+        assertEquals(xml, renderer.getOutput());
     }
     
     private String readFile(String path) throws IOException {
