@@ -38,8 +38,6 @@ public class XmlRenderer implements Renderer {
 	private int level;
     private boolean hardWrap;
 	private String declarationTag;
-
-	private boolean renderHardWrap;
 	
 	@Override
 	public void visit(Document node) {
