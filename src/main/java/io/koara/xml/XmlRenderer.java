@@ -36,8 +36,10 @@ public class XmlRenderer implements Renderer {
 
 	private StringBuffer out;
 	private int level;
+    private boolean hardWrap;
 	private String declarationTag;
-	private boolean hardWrap;
+
+	private boolean renderHardWrap;
 	
 	@Override
 	public void visit(Document node) {
@@ -255,11 +257,11 @@ public class XmlRenderer implements Renderer {
 	public String getOutput() {
 		return out.toString();
 	}
-	
+
 	public void setHardWrap(boolean hardWrap) {
 		this.hardWrap = hardWrap;
 	}
-	
+
 	public void setDeclarationTag(String declarationTag) {
 		this.declarationTag = declarationTag;
 	}
