@@ -17,6 +17,7 @@ import io.koara.ast.Document;
 public class EndToEndTest {
 
     private Parser parser;
+    private File input = new File("testsuite/input/end2end.kd");
 
     @Before
     public void setUp() {
@@ -1299,11 +1300,10 @@ public class EndToEndTest {
     }
 
     private void assertOutput(String file, String... modules) throws Exception {
-        File kd = new File("testsuite/input/end2end.kd");
         String xml = readFile("testsuite/output/xml/end2end/" + file + ".xml");
 
         parser.setModules(modules);
-        Document document = parser.parseFile(kd);
+        Document document = parser.parseFile(input);
         XmlRenderer renderer = new XmlRenderer();
         document.accept(renderer);
 
