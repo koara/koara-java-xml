@@ -35,7 +35,7 @@ package demo;
 
 import io.koara.Parser;
 import io.koara.ast.Document;
-import io.koara.xml.XmlRenderer;
+import XmlRenderer;
 
 public class App {
 
