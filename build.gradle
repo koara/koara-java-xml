@@ -1,92 +1,101 @@
-plugins {
-    id 'net.saliman.cobertura' version '2.3.1'
-    id 'com.github.kt3k.coveralls' version '2.6.3'
+buildscript {
+    repositories {
+        maven  {
+            url "http://repo1.maven.org/maven2"
+        }
+    }
+
+    dependencies {
+        classpath 'net.saliman:gradle-cobertura-plugin:2.3.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.7.1'
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
-apply plugin: 'net.saliman.cobertura'
+apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
 
 group = 'com.codeaddslife.koara'
-jar.baseName = 'koara-xml'
+jar.baseName = 'koara'
 version = '0.15.0'
 
 repositories {
-	mavenLocal()
-	mavenCentral()
+    maven  {
+        url "http://repo1.maven.org/maven2"
+    }
 }
 
 cobertura.coverageFormats = ['xml']
 
 compileJava {
-	sourceCompatibility = 1.6
-	targetCompatibility = 1.6
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
 }
 
 signing {
-	required = false
-	sign configurations.archives
+    required = false
+    sign configurations.archives
 }
 
 task sourcesJar(type: Jar, dependsOn:classes) {
-	classifier = 'sources'
-	from sourceSets.main.allJava.srcDirs
+    classifier = 'sources'
+    from sourceSets.main.allJava.srcDirs
 }
 
 task javadocJar(type: Jar) {
-	classifier = 'javadoc'
-	from javadoc
+    classifier = 'javadoc'
+    from javadoc
 }
 
 artifacts {
-	archives jar
-	archives javadocJar
-	archives sourcesJar
+    archives jar
+    archives javadocJar
+    archives sourcesJar
 }
 
 dependencies {
-	compile "com.codeaddslife.koara:koara:${project.version}"
-	testCompile 'junit:junit:4.11'
-	testCompile 'org.slf4j:slf4j-nop:1.7.12'
+    compile "com.codeaddslife.koara:koara:${project.version}"
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.slf4j:slf4j-nop:1.7.12'
 }
 
 uploadArchives {
-	repositories {
-		mavenDeployer {
-			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-			repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
-				ext.sonatypeUsername = rootProject.hasProperty('sonatypeUsername') ? rootProject.sonatypeUsername : ''
-				ext.sonatypePassword = rootProject.hasProperty('sonatypePassword') ? rootProject.sonatypePassword : ''
-				authentication(userName: sonatypeUsername, password: sonatypePassword)
-			}
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                ext.sonatypeUsername = rootProject.hasProperty('sonatypeUsername') ? rootProject.sonatypeUsername : ''
+                ext.sonatypePassword = rootProject.hasProperty('sonatypePassword') ? rootProject.sonatypePassword : ''
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
 
-			pom.project {
-				name 'koara-xml'
-				packaging 'jar'
-				description 'Koara to XML parser written in Java'
-				url 'http://www.koara.io'
+            pom.project {
+                name 'koara'
+                packaging 'jar'
+                description 'Koara parser written in Java'
+                url 'http://www.koara.io'
 
-				scm {
-					url 'https://github.com/koara/koara-java-xml.git'
-					connection 'https://github.com/koara/koara-java-xml.git'
-					developerConnection 'https://github.com/koara/koara-java-xml.git'
-				}
-				licenses {
-					license {
-						name 'The Apache Software License, Version 2.0'
-						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-						distribution 'repo'
-					}
-				}
-				developers {
-					developer {
-						id 'codeaddslife'
-						name 'Andy Van Den Heuvel'
-					}
-				}
-			}
-		}
-	}
+                scm {
+                    url 'https://github.com/koara/koara-java.git'
+                    connection 'https://github.com/koara/koara-java.git'
+                    developerConnection 'https://github.com/koara/koara-java.git'
+                }
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'codeaddslife'
+                        name 'Andy Van Den Heuvel'
+                    }
+                }
+            }
+        }
+    }
 }
